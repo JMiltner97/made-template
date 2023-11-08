@@ -1,35 +1,47 @@
 # Project Plan
 
 ## Title
-<!-- Give your project a short title. -->
-Awesome MADE project.
+The impact of roadside construction on freight transport within germany.
 
 ## Main Question
 
-<!-- Think about one main question you want to answer based on the data. -->
-1. Does writing an example question help students write better project plans?
+1. Does roadside construction shift freight transport towards train usage?
+
 
 ## Description
 
-<!-- Describe your data science project in max. 200 words. Consider writing about why and how you attempt it. -->
-XY is an important problem, because... This projects analyzes XY, using method A. The results can give insights into...
+As freight transport in germany is is fairly big, it's interesting to see if roadside construction has an impact to the network structure and if they shift towards a different transportation method.
 
 ## Datasources
 
-<!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
-
-### Datasource1: ExampleSource
-* Metadata URL: https://mobilithek.info/offers/-6901989592576801458
-* Data URL: https://raw.githubusercontent.com/od-ms/radverkehr-zaehlstellen/main/100035541/2019-01.csv
+### Datasource1: Beförderte Gütermenge und Beförderungsleistung(Straßengüterverkehr): Deutschland, Jahre, Verkehrswege
+* Metadata URL: https://mobilithek.info/offers/-2366581057346576431
+* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46231-0001_00.csv
 * Data Type: CSV
 
-Short description of the DataSource.
+This datasources holds information about the freight transport (on road) within germany).
+
+### Datasource2: Beförderungsleistung (Eisenbahngüterverkehr): Deutschland,Jahre, Versandland, Empfangsland, Gütergruppen
+* Metadata URL: https://mobilithek.info/offers/-7036678610796975891
+* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0011_00.xml
+* Data Type: XML
+
+This datasources holds information about the freight transport (on rail) within germany).
+
+### Datasource3: Aggregierte Arbeitsstellen längerer Dauer 2020 bis 2022
+* Metadata URL: https://mobilithek.info/offers/520200225602543616
+* Data URL: https://maps.infoware.de/opendata/roadworks.geojson
+* Data Type: JSON
+
+This datasources holds information about roadside construction in germany.
+
 
 ## Work Packages
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Example Issue [#1][i1]
-2. ...
+1. Import pipeline [#1][i1]
+2. Craft first analysis [#2][i2]
 
 [i1]: https://github.com/jvalue/made-template/issues/1
+[i2]: https://github.com/jvalue/made-template/issues/1
