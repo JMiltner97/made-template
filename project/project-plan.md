@@ -43,5 +43,5 @@ This datasources holds information about roadside construction in germany.
 1. Import pipeline [#1][i1]
 2. Craft first analysis [#2][i2]
 
-[i1]: https://github.com/jvalue/made-template/issues/1
-[i2]: https://github.com/jvalue/made-template/issues/1
+[i1]: https://github.com/users/JMiltner97/projects/1/views/1?layout=board&pane=issue&itemId=44027388
+[i2]: https://github.com/users/JMiltner97/projects/1/views/1?layout=board&pane=issue&itemId=44028477
