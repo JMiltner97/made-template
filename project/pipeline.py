@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from pandas import json_normalize
+#from pandas import json_normalize
 from sqlalchemy import create_engine
 
 #set data target

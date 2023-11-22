@@ -7,4 +7,4 @@ echo "Dependencies installed successfully."
 
 # Start data import
 echo "Starting import:"
-python3 /project/pipeline.py
+python pipeline.py
