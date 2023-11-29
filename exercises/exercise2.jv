@@ -87,7 +87,7 @@ pipeline TrainsPipeline {
     }
 
     constraint IFOPT_Format oftype RegexConstraint {
-        regex: /[a-z]{2}:\d+:\d+(:\d+)?(:\d+)?/;
+        regex: /^[a-z]{2}:\d+:\d+(:\d+)?$/;
     }
 
 
