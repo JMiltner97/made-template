@@ -75,7 +75,7 @@ pipeline TrainsPipeline {
 
     }
 
-    valuetype LB oftype integer {
+    valuetype LB oftype decimal {
         constraints: [ LBC ];
     }
 
