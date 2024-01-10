@@ -2,18 +2,10 @@ import pandas as pd
 import geopandas as gpd
 from shapely import wkt
 import csv
-
-
 import os
-
-#from pandas import json_normalize
 from sqlalchemy import create_engine
 
-
-csv.field_size_limit(500000)
-
 #set data target
-
 script_dir = os.path.dirname(__file__)
 parent_dir = os.path.dirname(script_dir)
 folder_path = os.path.join(parent_dir, "data")
@@ -29,21 +21,8 @@ datasource3 = "https://maps.infoware.de/opendata/roadworks.geojson"
 # Create SQLLite DB
 engine = create_engine(f"sqlite:///{full_path}")
 
-#read data to df and import
 #read in datasource1
-column_names = ['Year',
-                'Gewerblicher Verkehr und Werkverkehr insgesamt Beförderte Gütermenge',
-                'Gewerblicher Verkehr und Werkverkehr insgesamt Beförderungsleistung',
-                'Binnenverkehr Beförderte Gütermenge',
-                'Binnenverkehr Beförderungsleistung',
-                'Grenzüberschreitender Verkehr Beförderte Gütermenge',
-                'Grenzüberschreitender Verkehr Beförderungsleistung',
-                'Grenzüberschreitender Versand Beförderte Gütermenge',
-                'Grenzüberschreitender Versand Beförderungsleistung',
-                'Grenzüberschreitender Empfang Beförderte Gütermenge',
-                'Grenzüberschreitender Empfang Beförderungsleistung',
-                'Kabotage Beförderte Gütermenge',
-                'Kabotage Beförderungsleistung']
+column_names = ['Year','Gewerblicher Verkehr und Werkverkehr insgesamt Beförderte Gütermenge','Gewerblicher Verkehr und Werkverkehr insgesamt Beförderungsleistung','Binnenverkehr Beförderte Gütermenge','Binnenverkehr Beförderungsleistung','Grenzüberschreitender Verkehr Beförderte Gütermenge','Grenzüberschreitender Verkehr Beförderungsleistung','Grenzüberschreitender Versand Beförderte Gütermenge','Grenzüberschreitender Versand Beförderungsleistung','Grenzüberschreitender Empfang Beförderte Gütermenge','Grenzüberschreitender Empfang Beförderungsleistung','Kabotage Beförderte Gütermenge','Kabotage Beförderungsleistung']
 try:
     df = pd.read_csv(datasource1, sep=";", encoding='ISO-8859-1', on_bad_lines='skip', engine='python', header=None, names=column_names, skiprows=9,skipfooter=4)
 except UnicodeDecodeError:
@@ -52,11 +31,7 @@ df.to_sql(name="straße", con=engine, if_exists="replace", index=False)
 print(df.head())
 
 #read in datasource2
-column_names = ['Year',
-                'Beförderte Güter',
-                'Veränderung zum Vorjahr BefGü',
-                'Beförderungsleistung',
-                'Veränderung zum Vorjahr BefLst']
+column_names = ['Year','Beförderte Güter','Veränderung zum Vorjahr BefGü','Beförderungsleistung','Veränderung zum Vorjahr BefLst']
 try:
     df = pd.read_csv(datasource2, sep=";", encoding='ISO-8859-1', on_bad_lines='skip', engine='python', header=None, names=column_names, skiprows=7, skipfooter=3)
 except UnicodeDecodeError:
