@@ -98,6 +98,7 @@ model = sm.OLS(y, X)
 results = model.fit()
 print(results.summary())
 
+
 #regression analysis on streets 
 X = years_df[['Baustellen']]
 y = years_df['Beförderte Güter Straße']
