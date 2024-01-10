@@ -3,7 +3,9 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.exc import SQLAlchemyError
 
 # Init
-folder_path = "data"
+script_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(script_dir)
+folder_path = os.path.join(parent_dir, "data")
 data_file = "projdata.sqlite"
 full_path = os.path.join(folder_path, data_file)
 

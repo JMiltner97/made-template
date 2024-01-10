@@ -3,14 +3,18 @@ import geopandas as gpd
 from shapely import wkt
 
 import os
+
 #from pandas import json_normalize
 from sqlalchemy import create_engine
 
 #set data target
-folder_path = "data"
+
+script_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(script_dir)
+folder_path = os.path.join(parent_dir, "data")
 data_file = "projdata.sqlite"
 full_path = os.path.join(folder_path, data_file)
-print(full_path)
+
 
 # Declare dataset urls
 datasource1 = "https://www-genesis.destatis.de/genesis/downloads/00/tables/46231-0001_00.csv"
