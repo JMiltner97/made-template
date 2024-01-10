@@ -1,4 +1,5 @@
 #!/bin/sh
+cd "$(dirname "$0")"
 
 # Install dependencies
 echo "Installing project dependencies..."
