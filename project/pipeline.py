@@ -49,7 +49,7 @@ try:
 except UnicodeDecodeError:
     df = pd.read_csv(datasource1, sep=";", encoding='cp1252', on_bad_lines='skip', engine='python', header=None, names=column_names, skiprows=9, skipfooter=4)
 df.to_sql(name="straße", con=engine, if_exists="replace", index=False)
-print(df.tail())
+print(df.head())
 
 #read in datasource2
 column_names = ['Year',
@@ -63,9 +63,10 @@ except UnicodeDecodeError:
     df = pd.read_csv(datasource2, sep=";", encoding='cp1252', on_bad_lines='skip', engine='python', header=None, names=column_names, skiprows=7, skipfooter=3,)
 
 df.to_sql(name="eisenbahn", con=engine, if_exists="replace", index=False)
-print(df.tail())
+print(df.head())
 
 #read in datasource3
 gdf = gpd.read_file(datasource3)
 gdf.drop('geometry', axis=1, inplace=True)
 gdf.to_sql(name="baustellen", con=engine, if_exists="replace", index=False)
+print(gdf.head())
