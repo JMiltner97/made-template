@@ -26,8 +26,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r ./main/project/requirements.txt
 
-    # Run Pipeline Test 
+    # Set permissions    
+    - name: Set execute permission on tests.sh
+      run: chmod +x ./main/project/tests.sh
     
+      # Run Pipeline Test 
+
     - name: Pipeline Test
       run: |
         ./main/project/tests.sh
