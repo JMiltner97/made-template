@@ -3,7 +3,7 @@ cd "$(dirname "$0")"
 
 # Install dependencies
 echo "Installing project dependencies..."
-pip install -r requirements.txt
+pip install -r requirements.txt --quiet
 echo "Dependencies installed successfully."
 
 # Start data import
