@@ -10,6 +10,7 @@ from sqlalchemy import create_engine
 folder_path = "data"
 data_file = "projdata.sqlite"
 full_path = os.path.join(folder_path, data_file)
+print(full_path)
 
 # Declare dataset urls
 datasource1 = "https://www-genesis.destatis.de/genesis/downloads/00/tables/46231-0001_00.csv"
