@@ -21,9 +21,9 @@ As freight transport in germany is is fairly big, it's interesting to see if roa
 
 This datasources holds information about the freight transport (on road) within germany).
 
-### Datasource2: Beförderte Güter, Beförderungsleistung(Eisenbahngüterverkehr): Deutschland, Jahre,Hauptverkehrsbeziehungen
-* Metadata URL: https://mobilithek.info/offers/-1952674651004905478
-* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0003_00.csv
+### Datasource2: Beförderte Güter, Beförderungsleistung(Eisenbahngüterverkehr): Deutschland, Jahre
+* Metadata URL: https://mobilithek.info/offers/-2816139595278720568
+* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0001_00.csv
 * Data Type: XML
 
 This datasources holds information about the freight transport (on rail) within germany).
