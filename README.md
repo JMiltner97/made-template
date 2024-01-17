@@ -1,42 +1,37 @@
-# Methods of Advanced Data Engineering Template Project
+# The impact of roadside construction on freight transport within germany.
 
-This template project provides some structure for your open data project in the MADE module at FAU.
-This repository contains (a) a data science project that is developed by the student over the course of the semester, and (b) the exercises that are submitted over the course of the semester.
-Before you begin, make sure you have [Python](https://www.python.org/) and [Jayvee](https://github.com/jvalue/jayvee) installed. We will work with [Jupyter notebooks](https://jupyter.org/). The easiest way to do so is to set up [VSCode](https://code.visualstudio.com/) with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
+## Description
+
+Thisproject is the implementation of a data pipeline and analyses of transportaion and roadside construction data within germany and is underlying to a statictical study regarding the impact of roadside constructiontowards the split between rail and road transport. The final report can be found at the bottom of the file.
+
+## Datasources
+
+The following datasourced were used to conduct the analysis:
+
+### Datasource1: Beförderte Gütermenge und Beförderungsleistung(Straßengüterverkehr): Deutschland, Jahre, Verkehrswege
+* Metadata URL: https://mobilithek.info/offers/-2366581057346576431
+* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46231-0001_00.csv
+* Data Type: CSV
+
+This datasources holds information about the freight transport (on road) within germany).
+
+### Datasource2: Beförderte Güter, Beförderungsleistung(Eisenbahngüterverkehr): Deutschland, Jahre
+* Metadata URL: https://mobilithek.info/offers/-2816139595278720568
+* Data URL: https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0001_00.csv
+* Data Type: XML
+
+This datasources holds information about the freight transport (on rail) within germany).
+
+### Datasource3: Aggregierte Arbeitsstellen längerer Dauer 2020 bis 2022
+* Metadata URL: https://mobilithek.info/offers/520200225602543616
+* Data URL: https://maps.infoware.de/opendata/roadworks.geojson
+* Data Type: JSON
+
+This datasources holds information about roadside construction in germany.
 
 
-## Project Work
-Your data engineering project will run alongside lectures during the semester. We will ask you to regularly submit project work as milestones so you can reasonably pace your work. All project work submissions **must** be placed in the `project` folder.
+## Final Report
 
-### Exporting a Jupyter Notebook
-Jupyter Notebooks can be exported using `nbconvert` (`pip install nbconvert`). For example, to export the example notebook to html: `jupyter nbconvert --to html examples/final-report-example.ipynb --embed-images --output final-report.html`
+Find the final report [here][i1]
 
-
-## Exercises
-During the semester you will need to complete exercises, sometimes using [Python](https://www.python.org/), sometimes using [Jayvee](https://github.com/jvalue/jayvee). You **must** place your submission in the `exercises` folder in your repository and name them according to their number from one to five: `exercise<number from 1-5>.<jv or py>`.
-
-In regular intervalls, exercises will be given as homework to complete during the semester. We will divide you into two groups, one completing an exercise in Jayvee, the other in Python, switching each exercise. Details and deadlines will be discussed in the lecture, also see the [course schedule](https://made.uni1.de/). At the end of the semester, you will therefore have the following files in your repository:
-
-1. `./exercises/exercise1.jv` or `./exercises/exercise1.py`
-2. `./exercises/exercise2.jv` or `./exercises/exercise2.py`
-3. `./exercises/exercise3.jv` or `./exercises/exercise3.py`
-4. `./exercises/exercise4.jv` or `./exercises/exercise4.py`
-5. `./exercises/exercise5.jv` or `./exercises/exercise5.py`
-
-### Exercise Feedback
-We provide automated exercise feedback using a GitHub action (that is defined in `.github/workflows/exercise-feedback.yml`). 
-
-To view your exercise feedback, navigate to Actions -> Exercise Feedback in your repository.
-
-The exercise feedback is executed whenever you make a change in files in the `exercise` folder and push your local changes to the repository on GitHub. To see the feedback, open the latest GitHub Action run, open the `exercise-feedback` job and `Exercise Feedback` step. You should see command line output that contains output like this:
-
-```sh
-Found exercises/exercise1.jv, executing model...
-Found output file airports.sqlite, grading...
-Grading Exercise 1
-	Overall points 17 of 17
-	---
-	By category:
-		Shape: 4 of 4
-		Types: 13 of 13
-```
+[i1]: https://github.com/JMiltner97/made-template/blob/main/project/report.pdf
