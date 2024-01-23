@@ -9,7 +9,8 @@ pipeline DataPipeline {
         -> TempRename
         -> BatRename
         -> TableTransformer
-        //-> CToFTransformer
+        -> CToFTransformerTemp
+        -> CToFTransformerBatterie
         -> OutputLoader
         ;
 
@@ -22,7 +23,6 @@ pipeline DataPipeline {
         archiveType: "zip";
     }
 
-    //define TrainsTextFileInterpreter
     block SelectDataFile oftype FilePicker {
         path: "/data.csv";
     }
@@ -31,7 +31,6 @@ pipeline DataPipeline {
 
     }
 
-    //define TrainsCSVInterpreter to read in CSV correctly
     block DataCSVInterpreter  oftype CSVInterpreter {  
     delimiter: ";";
     }
@@ -46,60 +45,75 @@ pipeline DataPipeline {
         write: ['Batterietemperatur'];
     }
 
-    //define TrainsTableInterpreter to set datatypes accordingly
     block TableTransformer oftype TableInterpreter {
         header: true;
-        // columns: [
-        //     "Geraet" oftype integer,
-        //     "Hersteller" oftype text,
-        //     "Model" oftype text,
-        //     "Monat" oftype integer,
-        //     "Temperatur" oftype decimal,
-        //     "Batterietemperatur" oftype decimal,
-        //     "Geraet aktiv" oftype boolean
-        // ];
          columns: [
-            "Geraet" oftype integer,
+            "Geraet" oftype deviceId,
             "Hersteller" oftype text,
             "Model" oftype text,
             "Monat" oftype integer,
-            "Temperatur" oftype decimal,
-            "Batterietemperatur" oftype decimal,
-            "Geraet aktiv" oftype text
+            "Temperatur" oftype temperaturTypeC,
+            "Batterietemperatur" oftype temperaturTypeC,
+            "Geraet aktiv" oftype geraetStatus
         ];
     }
 
     transform celsiusToFahrenheit{
-        from cel oftype decimal;
+        from cel oftype temperaturTypeC;
         to fahr oftype decimal;
 
         fahr: (cel *9/5)+32;
     }
 
-    block CToFTransformer oftype TableTransformer{
+    block CToFTransformerTemp oftype TableTransformer{
         inputColumns: ["Temperatur"];
         outputColumn: "Temperatur";
         use: celsiusToFahrenheit;
     }
 
-    //define TrainsLoader to save data to SQLite DB
+    block CToFTransformerBatterie oftype TableTransformer{
+        inputColumns: ["Batterietemperatur"];
+        outputColumn: "Batterietemperatur";
+        use: celsiusToFahrenheit;
+    }
+
     block OutputLoader oftype SQLiteLoader {
         table: "temperatures";
         file: "./temperatures.sqlite";
     } 
 
-    //define Verkehr datatype to ensure allowed values
+    //Only valid deviceIds
+    valuetype deviceId oftype integer {
+        constraints: [ deviceIdConstraint ];
+    }
+
+    //Only valid deviceIds 
+    constraint deviceIdConstraint oftype RangeConstraint {
+      lowerBound: 1;
+    }
+
+    //Only valid states
+    valuetype geraetStatus oftype text {
+        constraints: [ geraetStatusConstraint ];
+    }
+
+    //Only valid deviceIds 
+    constraint geraetStatusConstraint oftype AllowlistConstraint {
+      allowlist: ['Ja', 'Nein'];
+    }
+
+    //Only valid months
     valuetype monatType oftype integer {
         constraints: [ monatConstraint ];
     }
 
-    //Only allow specified values 
+    //Only valid months 
     constraint monatConstraint oftype RangeConstraint {
       lowerBound: 1;
       upperBound: 12;
     }
 
-    //define LB datatype to ensure Coordinate consistency
+    //Only allow values >= −273,15 (abs. zero)
     valuetype temperaturTypeC oftype decimal {
         constraints: [ temperatureConstraintC ];
     }
