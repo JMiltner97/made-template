@@ -41,7 +41,7 @@ pipeline DataPipeline {
     }
 
     block BatRename oftype CellWriter{
-        at: cell M1;
+        at: cell J1;
         write: ['Batterietemperatur'];
     }
 
@@ -62,7 +62,7 @@ pipeline DataPipeline {
         from cel oftype temperaturTypeC;
         to fahr oftype decimal;
 
-        fahr: (cel *9/5)+32;
+        fahr: (cel * 9/5)+32;
     }
 
     block CToFTransformerTemp oftype TableTransformer{
