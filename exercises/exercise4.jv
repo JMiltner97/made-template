@@ -5,11 +5,11 @@ pipeline DataPipeline {
         -> ZipArchiveInterpreter
         -> SelectDataFile
         -> TextFileInterpreter
-        -> DataCSVInterpreter 
-        -> InitSelect
-        -> columDel
+        -> DataCSVInterpreter
+        -> TempRename
+        -> BatRename
         -> TableTransformer
-        -> CToFTransformer
+        //-> CToFTransformer
         -> OutputLoader
         ;
 
@@ -36,41 +36,49 @@ pipeline DataPipeline {
     delimiter: ";";
     }
 
-    //define StatusColumnDeleterto delete the "Status" column
-    block InitSelect oftype CellRangeSelector {
-        select: range A1:K*;
+    block TempRename oftype CellWriter{
+        at: cell E1;
+        write: ['Temperatur'];
     }
 
-    block columDel oftype ColumnDeleter {
-        delete: [column F, column G, column H, column I];
+    block BatRename oftype CellWriter{
+        at: cell M1;
+        write: ['Batterietemperatur'];
     }
-
-
 
     //define TrainsTableInterpreter to set datatypes accordingly
     block TableTransformer oftype TableInterpreter {
         header: true;
-        columns: [
+        // columns: [
+        //     "Geraet" oftype integer,
+        //     "Hersteller" oftype text,
+        //     "Model" oftype text,
+        //     "Monat" oftype integer,
+        //     "Temperatur" oftype decimal,
+        //     "Batterietemperatur" oftype decimal,
+        //     "Geraet aktiv" oftype boolean
+        // ];
+         columns: [
             "Geraet" oftype integer,
             "Hersteller" oftype text,
             "Model" oftype text,
-            "Monat" oftype monatType,
-            "Temperatur" oftype temperaturTypeC,
-            "Batterietemperatur" oftype temperaturTypeC,
-            "Geraet aktiv" oftype boolean
+            "Monat" oftype integer,
+            "Temperatur" oftype decimal,
+            "Batterietemperatur" oftype decimal,
+            "Geraet aktiv" oftype text
         ];
     }
 
     transform celsiusToFahrenheit{
-        from cel oftype temperaturTypeC;
+        from cel oftype decimal;
         to fahr oftype decimal;
 
         fahr: (cel *9/5)+32;
     }
 
     block CToFTransformer oftype TableTransformer{
-        inputColumns: ['Temperatur'];
-        outputColumn: 'temperature';
+        inputColumns: ["Temperatur"];
+        outputColumn: "Temperatur";
         use: celsiusToFahrenheit;
     }
 
