@@ -9,6 +9,7 @@ pipeline DataPipeline {
         -> InitSelect
         -> columDel
         -> TableTransformer
+        -> CToFTransformer
         -> OutputLoader
         ;
 
