@@ -1,0 +1,101 @@
+pipeline DataPipeline {
+
+    //  define pipeline
+    EntryStep
+        -> ZipArchiveInterpreter
+        -> SelectDataFile
+        -> TextFileInterpreter
+        -> DataCSVInterpreter 
+        -> InitSelect
+        -> columDel
+        -> TableTransformer
+        -> OutputLoader
+        ;
+
+    //define datasource
+    block EntryStep oftype HttpExtractor {
+        url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+    block ZipArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    //define TrainsTextFileInterpreter
+    block SelectDataFile oftype FilePicker {
+        path: "/data.csv";
+    }
+
+    block TextFileInterpreter oftype TextFileInterpreter { 
+
+    }
+
+    //define TrainsCSVInterpreter to read in CSV correctly
+    block DataCSVInterpreter  oftype CSVInterpreter {  
+    delimiter: ";";
+    }
+
+    //define StatusColumnDeleterto delete the "Status" column
+    block InitSelect oftype CellRangeSelector {
+        select: range A1:K*;
+    }
+
+    block columDel oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I];
+    }
+
+
+
+    //define TrainsTableInterpreter to set datatypes accordingly
+    block TableTransformer oftype TableInterpreter {
+        header: true;
+        columns: [
+            "Geraet" oftype integer,
+            "Hersteller" oftype text,
+            "Model" oftype text,
+            "Monat" oftype monatType,
+            "Temperatur" oftype temperaturTypeC,
+            "Batterietemperatur" oftype temperaturTypeC,
+            "Geraet aktiv" oftype boolean
+        ];
+    }
+
+    transform celsiusToFahrenheit{
+        from cel oftype temperaturTypeC;
+        to fahr oftype decimal;
+
+        fahr: (cel *9/5)+32;
+    }
+
+    block CToFTransformer oftype TableTransformer{
+        inputColumns: ['Temperatur'];
+        outputColumn: 'temperature';
+        use: celsiusToFahrenheit;
+    }
+
+    //define TrainsLoader to save data to SQLite DB
+    block OutputLoader oftype SQLiteLoader {
+        table: "temperatures";
+        file: "./temperatures.sqlite";
+    } 
+
+    //define Verkehr datatype to ensure allowed values
+    valuetype monatType oftype integer {
+        constraints: [ monatConstraint ];
+    }
+
+    //Only allow specified values 
+    constraint monatConstraint oftype RangeConstraint {
+      lowerBound: 1;
+      upperBound: 12;
+    }
+
+    //define LB datatype to ensure Coordinate consistency
+    valuetype temperaturTypeC oftype decimal {
+        constraints: [ temperatureConstraintC ];
+    }
+
+    //Only allow values >= −273,15 (abs. zero)
+    constraint temperatureConstraintC on decimal:
+        value >= -273.15;
+}
